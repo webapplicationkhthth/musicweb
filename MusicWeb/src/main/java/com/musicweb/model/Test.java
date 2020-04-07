@@ -1,11 +1,7 @@
 package com.musicweb.model;
 
-import java.util.List;
-
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +18,11 @@ public class Test {
 	SessionFactory sessionFactory;
 	@Autowired
 	ContientDao contientDao;
-	
+
 	@GetMapping(value = "test/")
-	public String test () {
+	public String test() {
 //		contientDao.add(new Contient(null, "Chau Au"));
-		for(Contient c : contientDao.getAll())
+		for (Contient c : contientDao.getAll())
 			System.out.println(c.getName());
 		return "example";
 	}
