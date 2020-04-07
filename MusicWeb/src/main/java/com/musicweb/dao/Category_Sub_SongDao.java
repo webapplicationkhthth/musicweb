@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.musicweb.model.Category_Sub_Song;
 import com.musicweb.model.Category_Sub_Song;
 
+@Repository
 public class Category_Sub_SongDao implements DAO<Category_Sub_Song> {
 	@Autowired
 	SessionFactory sessionFactory;
