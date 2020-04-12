@@ -1,0 +1,244 @@
+@charset "UTF-8";
+
+body, html {
+	width: 100%;
+	height: 100%;
+	min-height: 100vh;
+}
+
+.container {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background-image: url(../img/1.png);
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative
+}
+
+.form-container, .forget-container {
+	width: 450px;
+	transition: 0.4s;
+}
+
+.form-container h1 {
+	font-size: 45px;
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+.form-container h4 {
+	font-size: 25px;
+}
+
+.form-container h1, .form-container h4 {
+	margin-bottom: 20px;
+}
+
+.form {
+	background-color: #f1f2f6;
+}
+
+.container a {
+	text-decoration: none;
+	transition: 0.4s;
+	color: #2f3542;
+}
+
+.container a:hover {
+	text-decoration: underline;
+	color: #1e90ff;
+}
+
+.method-container p {
+	position: relative;
+	font-size: 18px;
+}
+
+.method-container p:after {
+	content: "";
+	position: absolute;
+	width: 50%;
+	height: 3px;
+	background-color: #57606f;
+	left: 50%;
+	bottom: -2px;
+	transform: translateX(-50%);
+	transition: 0.4s;
+}
+
+.method-container {
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid gray;
+}
+
+.input-container, .input-container-forget {
+	margin: 10px 0;
+	padding: 5px 0;
+	position: relative;
+}
+
+.input-container input, .input-container-forget input {
+	height: 26px;
+	border: none;
+	width: 100%;
+	background-color: #f1f2f6;
+	padding: 0 0 0 25px;
+	font-size: 17px;
+	outline: none;
+	box-sizing: border-box;
+}
+
+.input-container div i, .input-container-forget div i {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 17px;
+}
+
+.input-container div, .input-container-forget div {
+	line-height: 26px;
+	position: relative;
+	padding: 5px 5px;
+	width: 70%;
+	margin: auto;
+	border-bottom: 1px solid gray;
+	box-sizing: border-box;
+}
+
+.input-container div:after, .input-container-forget div:after {
+	content: "";
+	position: absolute;
+	width: 0%;
+	height: 3px;
+	background-color: #57606f;
+	left: 50%;
+	bottom: -2px;
+	transform: translateX(-50%);
+	transition: 0.4s;
+}
+
+.input-container div.focused:after, .input-container-forget div.focused:after
+	{
+	width: 50%;
+}
+
+.button-container, .button-container-forget {
+	width: 80%;
+	padding: 10px 0;
+	height: 30px;
+	margin: auto;
+}
+
+.button-container button, .button-container-forget button {
+	width: 100%;
+	height: 100%;
+	border: none;
+	background-color: #1e90ff;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.4s;
+	font-size: 18px;
+	color: #ffffff;
+}
+
+.button-container button:hover, .button-container-forget button:hover {
+	background-color: #3742fa;
+}
+
+.link-container {
+	width: 80%;
+	height: 40px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	margin: auto;
+	font-size: 17px;
+}
+
+.language-container {
+	height: 30px;
+	line-height: 30px;
+	padding: 10px 0;
+}
+
+.language-container a {
+	color: #ffffff;
+}
+
+div.username {
+	display: none;
+}
+
+div.signUp {
+	display: block;
+}
+
+.input-container::after, .input-container-forget::after {
+	content: " ";
+	position: absolute;
+	left: 50%;
+	bottom: -20px;
+	transform: translateX(-50%) scale(0);
+	color: #eb2f06;
+	font-size: 20px;
+	transition: 0.4s;
+	width: 100%;
+}
+
+.input-container.error::after, .input-container-forget.error::after {
+	content: attr(data-error);
+	transform: translateX(-50%) scale(1);
+}
+
+.code, .password-forget, .code-forget {
+	display: none;
+}
+
+.code span, .code-forget span {
+	position: absolute;
+	left: 30px;
+}
+
+.code input, .code-forget input {
+	padding-left: 60px;
+}
+
+.code span.counter, .code-forget span.counter {
+	left: 95%;
+	display: inline-block;
+}
+
+.code span.counter span, .code-forget span.counter span {
+	position: relative;
+	color: red;
+}
+
+.forget-container {
+	position: absolute;
+	z-index: 10;
+	left: 50%;
+	top: -50%;
+	transform: translate(-50%, -50%);
+	transition: 0.4s;
+}
+
+.method-container p i {
+	position: absolute;
+	right: 3%;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+	transition: 0.4s;
+	color: #2c3e50;
+	font-size: 25px;
+}
+
+.method-container p i:hover {
+	color: #eb2f06;
+}
