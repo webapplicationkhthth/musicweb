@@ -7,10 +7,12 @@ window.addEventListener("DOMContentLoaded", function() {
 	var inputContainerForget = document.querySelector(".input-container-forget");
 	var closeBtn = document.querySelector(".forget-container p i");
 	var sendCodeBtn = document.querySelector(".button-container-forget button");
+	var locks = document.querySelectorAll(".lock");
 	var spacePattern = /[ \t]+/g;
 	var emailPattern = /[a-zA-Z0-9]+@gmail.com/g;
 	var checkSignUp = 1; // 1: chưa nhập mã, 2 : đang trong quá trình nhập mã
 	var timerCode;
+	var checkMail = false;
 
 	for (var i = 0; i < inputs.length; i++) {
 		inputs[i].addEventListener("focus", function() {
@@ -53,7 +55,8 @@ window.addEventListener("DOMContentLoaded", function() {
 		document.querySelector(".password-forget").classList.remove("signUp");
 		
 		checkSignUp = 1;
-		sendCodeBtn.textContent = "Send code";
+		sendCodeBtn.textContent = document.querySelector(".recievecode").value;
+		checkMail = false;
 	});
 
 	links[0].addEventListener("click", function() {
@@ -62,23 +65,25 @@ window.addEventListener("DOMContentLoaded", function() {
 		document.querySelector(".forget-container").style.top = "50%";
 		
 		resetTimer(0);
+		checkMail = false;
 	});
 
 	links[1].addEventListener("click", function() {
 		var usernameContainer = document.querySelector(".username");
 		if (usernameContainer.classList.contains("signUp")) {
 			resetTimer(0);
-			this.textContent = "Sign in now!";
-			signInUpBtn.textContent = "Sign in";
+			this.textContent = document.querySelector(".signupMessageNow").value;
+			signInUpBtn.textContent = document.querySelector(".signupMessage").value;
 			
 			
 		} else {
 			resetTimer(0);
-			this.textContent = "Sign up now!";
-			signInUpBtn.textContent = "Sign up";
+			this.textContent = document.querySelector(".signinMessageNow").value;
+			signInUpBtn.textContent = document.querySelector(".signinMessage").value;
 		}
 		usernameContainer.classList.toggle("signUp");
 		signInUpBtn.classList.toggle("signUp");
+		checkMail = false;
 	});
 	
 	sendCodeBtn.addEventListener("click", function() {
@@ -87,7 +92,9 @@ window.addEventListener("DOMContentLoaded", function() {
 				if (document.querySelector(".email-forget input").value.trim().match(emailPattern) != null) {
 					document.querySelector(".email-forget input").value = document.querySelector(".email-forget input").value.trim();
 					if (document.querySelector(".email-forget input").value == "1@gmail.com") {
-						counter(1);
+						console.log(1);
+						if(!document.querySelector(".password-forget").classList.contains("signUp"))
+							counter(1);
 						checkSignUp = 2;
 						if(document.querySelector(".password-forget").classList.contains("signUp")) {
 							if (!isEmpty(document.querySelector(".password-forget input").value.trim())) {
@@ -95,50 +102,28 @@ window.addEventListener("DOMContentLoaded", function() {
 									alert("Your password is rested");
 									closeBtn.click();
 								} else {
-									inputContainerForget.dataset.error = "Password cannot have any space or ta letter";
+									inputContainerForget.dataset.error = document.querySelector(".spacepassword").value;;
 									inputContainerForget.classList.add("error");
 								}
 							} else {
-								inputContainerForget.dataset.error = "Password cannot be empty";
+								inputContainerForget.dataset.error = document.querySelector(".emptypassword").value;;
 								inputContainerForget.classList.add("error");
 							}
 						}
 					} else {
-						inputContainerForget.dataset.error = "Email does not exist";
+						inputContainerForget.dataset.error = document.querySelector(".doesnotexistemail").value;;
 						inputContainerForget.classList.add("error");
 					}
 				} else {
-					inputContainerForget.dataset.error = "Invalid email";
+					inputContainerForget.dataset.error = document.querySelector(".invalidemail").value;;
 					inputContainerForget.classList.add("error");
 				}
 			} else {
-				inputContainerForget.dataset.error = "Email cannot be empty";
+				inputContainerForget.dataset.error = document.querySelector(".emptyemail").value;;
 				inputContainerForget.classList.add("error");
 			}
 		} else {
-			if (!isEmpty(document.querySelector(".code-forget input").value)) {
-				if (!hasSpace(document.querySelector(".code-forget input").value)) {
-					if (parseInt(document.querySelector(".code-forget input").value) == 123456) {
-//						console.log("Correct code");
-						var code = 123456;
-						resetTimer(1);
-						document.querySelector(".code-forget").classList.add("signUp");
-						checkSignUp = 1;
-						sendCodeBtn.textContent = "Reset password";
-						document.querySelector(".code-forget input").value = 123456;
-						document.querySelector(".password-forget").classList.add("signUp");
-					} else {
-						inputContainerForget.dataset.error = "Incorrect code";
-						inputContainerForget.classList.add("error");
-					}
-				} else {
-					inputContainerForget.dataset.error = "Invalid Code";
-					inputContainerForget.classList.add("error");
-				}
-			} else {
-				inputContainerForget.dataset.error = "Code have not enter";
-				inputContainerForget.classList.add("error");
-			}
+			checkCode(1);
 		}
 	});
 
@@ -150,9 +135,21 @@ window.addEventListener("DOMContentLoaded", function() {
 				checkInputContainer(1, inputContainer);
 			}
 		} else {
-			alert("Incorrect code");
+			checkCode(0);
 		}
 	});
+	
+	for (var i = 0; i < locks.length; i++) {
+		locks[i].addEventListener("click", function(){
+			if(this.classList.contains("fa-unlock")) {
+				this.classList.remove("fa-unlock");
+				this.parentNode.querySelector("input").type = "password";
+			} else {
+				this.classList.add("fa-unlock");
+				this.parentNode.querySelector("input").type = "text";
+			}
+		});
+	}
 	
 	function resetTimer(isForget) {
 		if (isForget) {
@@ -170,6 +167,42 @@ window.addEventListener("DOMContentLoaded", function() {
 		inputContainerForget.classList.remove("error");
 	}
 	
+	function checkCode(isForget) {
+		var name = "";
+		var object = inputContainer;
+		if(isForget == 1) {
+			name = "-forget";
+			object = inputContainerForget;
+		}
+		if (!isEmpty(document.querySelector(`.code${name} input`).value)) {
+			if (!hasSpace(document.querySelector(`.code${name} input`).value)) {
+				if (parseInt(document.querySelector(`.code${name} input`).value) == 123456) {
+//					console.log(`Correct code`);
+					var code = 123456;
+					resetTimer(1);
+					document.querySelector(`.code${name}`).classList.add("signUp");
+					checkSignUp = 1;
+					sendCodeBtn.textContent = document.querySelector(".resetMessage").value;
+					document.querySelector(`.code${name} input`).value = 123456;
+					document.querySelector(`.password${name}`).classList.add("signUp");
+					if(!isForget) {
+						alert("Sign up successfully");
+						links[1].click();
+					}
+				} else {
+					object.dataset.error = document.querySelector(".incorrectcode").value;;
+					object.classList.add(`error`);
+				}
+			} else {
+				object.dataset.error = document.querySelector(".invalidcode").value;;
+				object.classList.add(`error`);
+			}
+		} else {
+			object.dataset.error = document.querySelector(".emptycode").value;;
+			object.classList.add(`error`);
+		}
+	}
+	
 	function checkInputContainer(isSignIn, inputContainer) {
 		var validUserName = false;
 		if (isSignIn) {
@@ -179,12 +212,12 @@ window.addEventListener("DOMContentLoaded", function() {
 				if (!hasSpace(document.querySelector(".username input").value)) {
 					validUserName = true;
 				} else {
-					inputContainer.dataset.error = "Display name cannot have any space or ta letter";
+					inputContainer.dataset.error = document.querySelector(".spacedisplayname").value;;
 					inputContainer.classList.add("error");
 					validUserName = false;
 				}
 			} else {
-				inputContainer.dataset.error = "Display name cannot be empty";
+				inputContainer.dataset.error = document.querySelector(".emptydisplayname").value;;
 				inputContainer.classList.add("error");
 				validUserName = false;
 			}
@@ -194,37 +227,48 @@ window.addEventListener("DOMContentLoaded", function() {
 			if (!isEmpty(document.querySelector(".email input").value.trim())) {
 				if (document.querySelector(".email input").value.trim().match(emailPattern) != null) {
 					document.querySelector(".email input").value = document.querySelector(".email input").value.trim();
-					if (document.querySelector(".email input").value == "1@gmail.com") {
+					if (document.querySelector(".email input").value == "1@gmail.com" && isSignIn) {
 						if (!isEmpty(document.querySelector(".password input").value.trim())) {
 							if (!hasSpace(document.querySelector(".password input").value)) {
 								if (isSignIn) {
-//									alert("Sign In successfully");
+									alert("Sign In successfully");
 									inputContainer.classList.remove("error");
-//									signInUpBtn.disabled = true;
-								} else {
-//									alert("Sign Up successfully");
-									inputContainer.classList.remove("error");
-									checkSignUp = 2;
-									counter(0);
+									checkMail = false;
 								}
 							} else {
-								inputContainer.dataset.error = "Password cannot have any space or ta letter";
+								inputContainer.dataset.error = document.querySelector(".spacePassword").value;;
 								inputContainer.classList.add("error");
 							}
 						} else {
-							inputContainer.dataset.error = "Password cannot be empty";
+							inputContainer.dataset.error = document.querySelector(".emptypassword").value;;
 							inputContainer.classList.add("error");
 						}
 					} else {
-						inputContainer.dataset.error = "Email does not exist";
-						inputContainer.classList.add("error");
+						if(isSignIn) {
+							inputContainer.dataset.error = document.querySelector(".doesnotexistemail").value;;
+							inputContainer.classList.add("error");
+						} else {
+							if (!isEmpty(document.querySelector(".password input").value.trim())) {
+								if (!hasSpace(document.querySelector(".password input").value)) {
+									inputContainer.classList.remove("error");
+									checkSignUp = 2;
+									counter(0);
+								} else {
+									inputContainer.dataset.error = document.querySelector(".spacePassword").value;;
+									inputContainer.classList.add("error");
+								}
+							} else {
+								inputContainer.dataset.error = document.querySelector(".emptypassword").value;;
+								inputContainer.classList.add("error");
+							}
+						}
 					}
 				} else {
-					inputContainer.dataset.error = "Invalid email";
+					inputContainer.dataset.error = document.querySelector(".invalidemail").value;
 					inputContainer.classList.add("error");
 				}
 			} else {
-				inputContainer.dataset.error = "Email cannot be empty";
+				inputContainer.dataset.error = document.querySelector(".emptyemail").value;
 				inputContainer.classList.add("error");
 			}
 		}
@@ -232,12 +276,21 @@ window.addEventListener("DOMContentLoaded", function() {
 	
 	function counter(isForget) {
 		var minute = 1;
-		var second = 5;
+		var second = 59;
 		var name;
+		var object;
 		if (isForget) {
 			name = "code-forget";
+			object = inputContainerForget;
 		} else {
 			name = "code"
+			object = inputContainer;
+		}
+		if(!checkMail) {
+			object.dataset.error = document.querySelector(".checkemail").value;
+			object.classList.add("error");
+			sendCodeBtn.textContent = document.querySelector(".sendcodeMessage").value;
+			checkMail = true;
 		}
 		document.querySelector(`.${name}`).classList.add("signUp");
 		document.querySelector(`.${name} .minute`).textContent = minute;
