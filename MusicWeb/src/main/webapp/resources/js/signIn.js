@@ -93,7 +93,8 @@ window.addEventListener("DOMContentLoaded", function() {
 					document.querySelector(".email-forget input").value = document.querySelector(".email-forget input").value.trim();
 					if (document.querySelector(".email-forget input").value == "1@gmail.com") {
 						console.log(1);
-						counter(1);
+						if(!document.querySelector(".password-forget").classList.contains("signUp"))
+							counter(1);
 						checkSignUp = 2;
 						if(document.querySelector(".password-forget").classList.contains("signUp")) {
 							if (!isEmpty(document.querySelector(".password-forget input").value.trim())) {
@@ -105,7 +106,7 @@ window.addEventListener("DOMContentLoaded", function() {
 									inputContainerForget.classList.add("error");
 								}
 							} else {
-								inputContainerForget.dataset.error = document.querySelector(".emptyepassword").value;;
+								inputContainerForget.dataset.error = document.querySelector(".emptypassword").value;;
 								inputContainerForget.classList.add("error");
 							}
 						}
@@ -135,8 +136,6 @@ window.addEventListener("DOMContentLoaded", function() {
 			}
 		} else {
 			checkCode(0);
-			alert("Sign up successfully");
-			links[1].click();
 		}
 	});
 	
@@ -186,6 +185,10 @@ window.addEventListener("DOMContentLoaded", function() {
 					sendCodeBtn.textContent = document.querySelector(".resetMessage").value;
 					document.querySelector(`.code${name} input`).value = 123456;
 					document.querySelector(`.password${name}`).classList.add("signUp");
+					if(!isForget) {
+						alert("Sign up successfully");
+						links[1].click();
+					}
 				} else {
 					object.dataset.error = document.querySelector(".incorrectcode").value;;
 					object.classList.add(`error`);
