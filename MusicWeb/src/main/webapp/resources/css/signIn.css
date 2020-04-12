@@ -19,7 +19,7 @@ body, html {
 }
 
 .form-container, .forget-container {
-	width: 450px;
+	width: 500px;
 	transition: 0.4s;
 }
 
@@ -241,4 +241,8 @@ div.signUp {
 
 .method-container p i:hover {
 	color: #eb2f06;
+}
+
+.input-container div.password i, .input-container-forget div.password-forget i {
+	cursor: pointer;
 }

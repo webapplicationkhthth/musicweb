@@ -45,7 +45,7 @@ public class WebConfig implements WebMvcConfigurer {
 		return multipartResolver;
 	}
 
-	//Multi languages
+	// Multi languages
 	@Bean
 	public SessionLocaleResolver localeResolver() {
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
