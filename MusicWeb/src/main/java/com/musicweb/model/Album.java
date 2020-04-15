@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "album")
 public class Album {
@@ -86,6 +88,7 @@ public class Album {
 		this.account_id = account_id;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "album_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Song> getSongs() {
@@ -96,6 +99,7 @@ public class Album {
 		this.songs = songs;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.album", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed_Album> getNewsfeed_Albums() {

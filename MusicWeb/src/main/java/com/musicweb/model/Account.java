@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "account")
 public class Account {
@@ -172,6 +174,7 @@ public class Account {
 		this.nation_id = nation_id;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "account_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Album> getAlbums() {
@@ -182,6 +185,7 @@ public class Account {
 		this.albums = albums;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "account_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Playlist> getPlaylists() {
@@ -192,6 +196,7 @@ public class Account {
 		this.playlists = playlists;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "account_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Song_Comment> getSong_Comments() {
@@ -202,6 +207,7 @@ public class Account {
 		this.song_Comments = song_Comments;
 	}
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "account_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Song_Comment_Reply> getSong_Comment_Replies() {
@@ -212,6 +218,7 @@ public class Account {
 		this.song_Comment_Replies = song_Comment_Replies;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "account_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed> getNewsfeeds() {
@@ -222,6 +229,7 @@ public class Account {
 		this.newsfeeds = newsfeeds;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "account_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed_Comment> getNewsfeed_Comments() {
@@ -232,6 +240,7 @@ public class Account {
 		this.newsfeed_Comments = newsfeed_Comments;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "account_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed_Comment_Reply> getNewsfeed_Comment_Replies() {
@@ -242,6 +251,7 @@ public class Account {
 		this.newsfeed_Comment_Replies = newsfeed_Comment_Replies;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.account", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Favorite> getFavorites() {
@@ -252,6 +262,7 @@ public class Account {
 		this.favorites = favorites;
 	}
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.genre", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Genre_Account> getGenre_Accounts() {

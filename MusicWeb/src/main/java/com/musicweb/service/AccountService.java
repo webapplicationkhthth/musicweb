@@ -2,6 +2,9 @@ package com.musicweb.service;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ public class AccountService /* implements DAO<Account> */ {
 	SessionFactory sessionFactory;
 	@Autowired
 	DAO<Account> accountDao;
+	private String hql;
 
 //	@Override
 	public Account getOne(Integer id) {
@@ -41,5 +45,16 @@ public class AccountService /* implements DAO<Account> */ {
 //	@Override
 	public Boolean remove(Account t) {
 		return accountDao.remove(t);
+	}
+	
+	public Account getByMail(String email) {
+		Account account = null;
+		hql = "from Account where email like :email";
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		query.setParameter("email", email);
+		if(query.getResultList().size() > 0)
+			account = (Account) query.getResultList().get(0);
+		return account;
 	}
 }

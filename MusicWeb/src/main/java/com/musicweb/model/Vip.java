@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "vip")
 public class Vip {
@@ -71,6 +73,7 @@ public class Vip {
 		this.duration = duration;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "vip_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Account> getAccounts() {

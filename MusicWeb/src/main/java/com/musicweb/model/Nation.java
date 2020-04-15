@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "nation")
 public class Nation {
@@ -63,6 +65,7 @@ public class Nation {
 		this.contient_id = contient_id;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "nation_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Account> getAccounts() {

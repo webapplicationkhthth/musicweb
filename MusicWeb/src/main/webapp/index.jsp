@@ -1,1 +1,1 @@
-<% response.sendRedirect("views/example.jsp"); %>
+<% response.sendRedirect("signInController/"); %>

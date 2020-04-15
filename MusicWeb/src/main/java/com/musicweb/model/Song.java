@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "song")
 public class Song {
@@ -123,6 +125,7 @@ public class Song {
 		this.album_id = album_id;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.song", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Category_Sub_Song> getCategory_Sub_Songs() {
@@ -133,6 +136,7 @@ public class Song {
 		this.category_Sub_Songs = category_Sub_Songs;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.song", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed_Song> getNewsfeed_Songs() {
@@ -143,6 +147,7 @@ public class Song {
 		this.newsfeed_Songs = newsfeed_Songs;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.song", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Favorite> getFavorites() {
@@ -152,7 +157,8 @@ public class Song {
 	public void setFavorites(List<Favorite> favorites) {
 		this.favorites = favorites;
 	}
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.song", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Playlist_Song> getPlaylist_Songs() {
@@ -162,7 +168,8 @@ public class Song {
 	public void setPlaylist_Songs(List<Playlist_Song> playlist_Songs) {
 		this.playlist_Songs = playlist_Songs;
 	}
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.song", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Genre_Song> getGenre_Songs() {

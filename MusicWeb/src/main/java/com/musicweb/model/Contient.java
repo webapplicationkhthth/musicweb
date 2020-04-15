@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "contient")
 public class Contient {
@@ -49,6 +51,7 @@ public class Contient {
 		this.name = name;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "contient_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Nation> getNations() {

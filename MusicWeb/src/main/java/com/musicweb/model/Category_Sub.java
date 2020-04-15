@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "category_sub")
 public class Category_Sub {
@@ -85,6 +87,7 @@ public class Category_Sub {
 		this.cate_id = cate_id;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.category_sub", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Category_Sub_Song> getCategory_Sub_Songs() {

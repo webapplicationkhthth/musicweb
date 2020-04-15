@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "newsfeed_comment")
 public class Newsfeed_Comment {
@@ -97,6 +99,7 @@ public class Newsfeed_Comment {
 		this.account_id = account_id;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "newsfeed_comment_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed_Comment_Reply> getNewsfeed_Comment_Replies() {

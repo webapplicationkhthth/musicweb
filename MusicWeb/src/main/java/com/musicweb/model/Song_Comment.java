@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "song_comment")
 public class Song_Comment {
@@ -97,6 +99,7 @@ public class Song_Comment {
 		this.account_id = account_id;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "song_comment_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Song_Comment_Reply> getSong_Comment_Replies() {

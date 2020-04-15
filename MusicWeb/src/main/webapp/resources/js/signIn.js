@@ -13,6 +13,22 @@ window.addEventListener("DOMContentLoaded", function() {
 	var checkSignUp = 1; // 1: chưa nhập mã, 2 : đang trong quá trình nhập mã
 	var timerCode;
 	var checkMail = false;
+	var code;
+	
+	var Account = {
+			id:null,
+			name:null,
+			email:null,
+			password:null,
+			role:null,
+			avatar:null,
+			description:null,
+			liked:null,
+			follower:null,
+			start_vip:null,
+			vip:null,
+			nation_id:null
+	}
 
 	for (var i = 0; i < inputs.length; i++) {
 		inputs[i].addEventListener("focus", function() {
@@ -73,13 +89,13 @@ window.addEventListener("DOMContentLoaded", function() {
 		if (usernameContainer.classList.contains("signUp")) {
 			resetTimer(0);
 			this.textContent = document.querySelector(".signupMessageNow").value;
-			signInUpBtn.textContent = document.querySelector(".signupMessage").value;
+			signInUpBtn.textContent = document.querySelector(".signinMessage").value;
 			
 			
 		} else {
 			resetTimer(0);
 			this.textContent = document.querySelector(".signinMessageNow").value;
-			signInUpBtn.textContent = document.querySelector(".signinMessage").value;
+			signInUpBtn.textContent = document.querySelector(".signupMessage").value;
 		}
 		usernameContainer.classList.toggle("signUp");
 		signInUpBtn.classList.toggle("signUp");
@@ -91,16 +107,46 @@ window.addEventListener("DOMContentLoaded", function() {
 			if (!isEmpty(document.querySelector(".email-forget input").value.trim())) {
 				if (document.querySelector(".email-forget input").value.trim().match(emailPattern) != null) {
 					document.querySelector(".email-forget input").value = document.querySelector(".email-forget input").value.trim();
-					if (document.querySelector(".email-forget input").value == "1@gmail.com") {
-						console.log(1);
+					var account = null;
+					$.ajax({
+						url : "../accountController/account?email=" + document.querySelector(".email-forget input").value,
+						type : "GET",
+						data : "",
+						contentType : "application/json; charset=utf-8",
+						success : function(data) {
+							account = data;
+						},
+						async : false,
+						error : function(e) {
+							console.log(e);
+						}
+					});
+					
+					if(account != null) {
 						if(!document.querySelector(".password-forget").classList.contains("signUp"))
 							counter(1);
 						checkSignUp = 2;
 						if(document.querySelector(".password-forget").classList.contains("signUp")) {
 							if (!isEmpty(document.querySelector(".password-forget input").value.trim())) {
 								if (!hasSpace(document.querySelector(".password-forget input").value)) {
-									alert("Your password is rested");
-									closeBtn.click();
+									account.password = document.querySelector(".password-forget input").value;
+//									console.log(account);
+									$.ajax({
+										url : "../accountController/update",
+										type : "POST",
+										data : JSON.stringify(account),
+//										dataType : 'json',
+										contentType : "application/json; charset=utf-8",
+										success : function(data) {
+											alert("Your password is rested");
+											closeBtn.click();
+										},
+										async : false,
+										error : function(e) {
+											console.log(e);
+										}
+									});
+									
 								} else {
 									inputContainerForget.dataset.error = document.querySelector(".spacepassword").value;;
 									inputContainerForget.classList.add("error");
@@ -176,17 +222,36 @@ window.addEventListener("DOMContentLoaded", function() {
 		}
 		if (!isEmpty(document.querySelector(`.code${name} input`).value)) {
 			if (!hasSpace(document.querySelector(`.code${name} input`).value)) {
-				if (parseInt(document.querySelector(`.code${name} input`).value) == 123456) {
+				if (parseInt(document.querySelector(`.code${name} input`).value) == code) {
 //					console.log(`Correct code`);
-					var code = 123456;
 					resetTimer(1);
 					document.querySelector(`.code${name}`).classList.add("signUp");
 					checkSignUp = 1;
 					sendCodeBtn.textContent = document.querySelector(".resetMessage").value;
-					document.querySelector(`.code${name} input`).value = 123456;
+					document.querySelector(`.code${name} input`).value = code;
 					document.querySelector(`.password${name}`).classList.add("signUp");
+					
 					if(!isForget) {
-						alert("Sign up successfully");
+						console.log(checkSignUp)
+						var person = JSON.parse(JSON.stringify(Account));
+						person["email"] = document.querySelector(".email input").value.trim();
+						person["password"] = document.querySelector(".password input").value.trim();
+						person["name"] = document.querySelector(".username input").value.trim();
+						
+						$.ajax({
+							url : "../accountController/add",
+							type : "POST",
+							data : JSON.stringify(person),
+							contentType : "application/json; charset=utf-8",
+							success : function(data) {
+								console.log(data);
+								alert("Sign up successfully");
+							},
+							async : false,
+							error : function(e) {
+								console.log(e);
+							}
+						});
 						links[1].click();
 					}
 				} else {
@@ -227,21 +292,51 @@ window.addEventListener("DOMContentLoaded", function() {
 			if (!isEmpty(document.querySelector(".email input").value.trim())) {
 				if (document.querySelector(".email input").value.trim().match(emailPattern) != null) {
 					document.querySelector(".email input").value = document.querySelector(".email input").value.trim();
-					if (document.querySelector(".email input").value == "1@gmail.com" && isSignIn) {
-						if (!isEmpty(document.querySelector(".password input").value.trim())) {
-							if (!hasSpace(document.querySelector(".password input").value)) {
-								if (isSignIn) {
-									alert("Sign In successfully");
-									inputContainer.classList.remove("error");
-									checkMail = false;
+					var account = null;
+					if(account == null) {
+						$.ajax({
+							url : "../accountController/account?email=" + document.querySelector(".email input").value,
+							type : "GET",
+							data : "",
+							contentType : "application/json; charset=utf-8",
+							success : function(data) {
+								account = data;
+							},
+							async : false,
+							error : function(e) {
+								console.log(e);
+							}
+						});
+					}
+					
+					if(account != "") {
+						if(!isSignIn) {
+							alert("Email has already used");
+							return;
+						} else {
+							if (!isEmpty(document.querySelector(".password input").value.trim())) {
+								if (!hasSpace(document.querySelector(".password input").value)) {
+									if(isSignIn) {
+										if(document.querySelector(".password input").value == account.password) {
+											alert("Sign In successfully");
+											inputContainer.classList.remove("error");
+											checkMail = false;
+										} else {
+											inputContainer.dataset.error = document.querySelector(".incorrectpassword").value;
+											inputContainer.classList.add("error");
+										}
+									} else {
+										inputContainer.classList.remove("error");
+										checkMail = false;
+									}
+								} else {
+									inputContainer.dataset.error = document.querySelector(".spacePassword").value;;
+									inputContainer.classList.add("error");
 								}
 							} else {
-								inputContainer.dataset.error = document.querySelector(".spacePassword").value;;
+								inputContainer.dataset.error = document.querySelector(".emptypassword").value;;
 								inputContainer.classList.add("error");
 							}
-						} else {
-							inputContainer.dataset.error = document.querySelector(".emptypassword").value;;
-							inputContainer.classList.add("error");
 						}
 					} else {
 						if(isSignIn) {
@@ -279,12 +374,15 @@ window.addEventListener("DOMContentLoaded", function() {
 		var second = 59;
 		var name;
 		var object;
+		var email;
 		if (isForget) {
 			name = "code-forget";
 			object = inputContainerForget;
+			email = document.querySelector(".email-forget input").value.trim();
 		} else {
 			name = "code"
 			object = inputContainer;
+			email = document.querySelector(".email input").value.trim();
 		}
 		if(!checkMail) {
 			object.dataset.error = document.querySelector(".checkemail").value;
@@ -292,6 +390,21 @@ window.addEventListener("DOMContentLoaded", function() {
 			sendCodeBtn.textContent = document.querySelector(".sendcodeMessage").value;
 			checkMail = true;
 		}
+		$.ajax({
+			url : "./getcode?email="+email,
+			type : "GET",
+//			data : JSON.stringify(person),
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				console.log(data)
+				code = data;
+			},
+			async : false,
+			error : function(e) {
+				console.log(e);
+			}
+		});
 		document.querySelector(`.${name}`).classList.add("signUp");
 		document.querySelector(`.${name} .minute`).textContent = minute;
 		document.querySelector(`.${name} .second`).textContent = second;

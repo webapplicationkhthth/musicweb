@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "newsfeed")
 public class Newsfeed {
@@ -88,6 +90,7 @@ public class Newsfeed {
 		this.account_id = account_id;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "newsfeed_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed_Image> getNewsfeed_Images() {
@@ -98,6 +101,7 @@ public class Newsfeed {
 		this.newsfeed_Images = newsfeed_Images;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "newsfeed_id", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed_Comment> getNewsfeed_Comments() {
@@ -108,6 +112,7 @@ public class Newsfeed {
 		this.newsfeed_Comments = newsfeed_Comments;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.newsfeed", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
 	public List<Newsfeed_Song> getNewsfeed_Songs() {
