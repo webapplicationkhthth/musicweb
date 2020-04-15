@@ -80,6 +80,10 @@
 		<c:set var="checkemail"><spring:message code="signin.checkemail"></spring:message></c:set>
 		<c:set var="recievecode"><spring:message code="signin.recievecode"></spring:message></c:set>
 		<c:set var="incorrectpassword"><spring:message code="signin.incorrectpassword"></spring:message></c:set>
+		<c:set var="signupsuccess"><spring:message code="signin.signupsuccess"></spring:message></c:set>
+		<c:set var="resetpasswordsuccess"><spring:message code="signin.resetpasswordsuccess"></spring:message></c:set>
+		<c:set var="existemail"><spring:message code="signin.existemail"></spring:message></c:set>
+		
 		
 		<input hidden="" value="${emptyemail}" class="emptyemail">
 		<input hidden="" value="${invalidemail}" class="invalidemail">
@@ -92,8 +96,11 @@
 		<input hidden="" value="${invalidcode}" class="invalidcode">
 		<input hidden="" value="${incorrectcode}" class="incorrectcode">
 		<input hidden="" value="${checkemail}" class="checkemail">
-		<input hidden="" value="${recievecode}" class=recievecode>
-		<input hidden="" value="${incorrectpassword}" class=incorrectpassword>
+		<input hidden="" value="${recievecode}" class="recievecode">
+		<input hidden="" value="${incorrectpassword}" class="incorrectpassword">
+		<input hidden="" value="${signupsuccess}" class="signupsuccess">
+		<input hidden="" value="${resetpasswordsuccess}" class="resetpasswordsuccess">
+		<input hidden="" value="${existemail}" class="existemail">
 		
 		<input hidden="" value="${signinMessage}" class="signinMessage">
 		<input hidden="" value="${signupMessage}" class="signupMessage">

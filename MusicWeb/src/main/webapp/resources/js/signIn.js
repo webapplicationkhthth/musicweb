@@ -138,7 +138,7 @@ window.addEventListener("DOMContentLoaded", function() {
 //										dataType : 'json',
 										contentType : "application/json; charset=utf-8",
 										success : function(data) {
-											alert("Your password is rested");
+											alert(document.querySelector(".resetpasswordsuccess").value);
 											closeBtn.click();
 										},
 										async : false,
@@ -245,7 +245,7 @@ window.addEventListener("DOMContentLoaded", function() {
 							contentType : "application/json; charset=utf-8",
 							success : function(data) {
 								console.log(data);
-								alert("Sign up successfully");
+								alert(document.querySelector(".signupsuccess").value);
 							},
 							async : false,
 							error : function(e) {
@@ -311,7 +311,7 @@ window.addEventListener("DOMContentLoaded", function() {
 					
 					if(account != "") {
 						if(!isSignIn) {
-							alert("Email has already used");
+							alert(document.querySelector(".existemail").value);
 							return;
 						} else {
 							if (!isEmpty(document.querySelector(".password input").value.trim())) {
