@@ -8,9 +8,9 @@
 </head>
 <body>
 	<div class="container">
-		<jsp:include page="header1.jsp"></jsp:include>
+		<jsp:include page="header.jsp"></jsp:include>
 		<i class="fab fa-instagram"></i>Content
-		<jsp:include page="footer1.jsp"></jsp:include>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>
