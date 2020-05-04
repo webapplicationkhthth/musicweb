@@ -1,4 +1,4 @@
-<%@ include file="library.jsp" %>
+<%@ include file="library.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +7,10 @@
 <title>Example</title>
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-<i class="fab fa-instagram"></i>Content
-<jsp:include page="footer.jsp"></jsp:include>
+	<div class="container">
+		<jsp:include page="header1.jsp"></jsp:include>
+		<i class="fab fa-instagram"></i>Content
+		<jsp:include page="footer1.jsp"></jsp:include>
+	</div>
 </body>
 </html>
