@@ -15,7 +15,7 @@
 	<url>http://www.example.com</url>
 
 	<properties>
-		<spring.version>5.1.5.RELEASE</spring.version>
+		<spring.version>5.2.20.RELEASE</spring.version>
 		<hibernate.version>5.3.7.Final</hibernate.version>
 	</properties>
 	<dependencies>
